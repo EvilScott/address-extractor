@@ -13,23 +13,21 @@ const STREET_NUM_RE = /(\d{1,6})|One|Two|Three/,
 const URL = process.argv[2];
 if (!URL) throw 'missing required parameter: URL';
 
+const decodeHTMLEntities = content => {
+  return new JSDOM(content).window.document.querySelector('body').textContent;
+};
+
 const getContent = dom => {
   let document = dom.window.document;
   document.querySelectorAll('script,svg').forEach(el => el.remove());
-  return document.querySelector('body').innerHTML
+  return decodeHTMLEntities(document.querySelector('body').innerHTML
     .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .replace('&amp;', '&')
-    .replace('&nbsp;', ' '); //TODO there is probably a clean parse to do this
-};
-
-const getAddresses = content => {
-  return content.match(ADDRESS_PATTERN);
+    .replace(/\s+/g, ' '));
 };
 
 JSDOM.fromURL(URL).then(dom => {
   const content = getContent(dom);
-  const addresses = getAddresses(content);
+  const addresses = content.match(ADDRESS_PATTERN);
   addresses.forEach(a => console.log(a));
   process.exit(0);
 }).catch(err => {
