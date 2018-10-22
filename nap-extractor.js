@@ -23,14 +23,14 @@ const getContent = dom => {
     .replace('&nbsp;', ' '); //TODO there is probably a clean parse to do this
 };
 
-const getNAPs = content => {
+const getAddresses = content => {
   return content.match(ADDRESS_PATTERN);
 };
 
 JSDOM.fromURL(URL).then(dom => {
   const content = getContent(dom);
-  const naps = getNAPs(content);
-  console.dir(naps);
+  const addresses = getAddresses(content);
+  addresses.forEach(a => console.log(a));
   process.exit(0);
 }).catch(err => {
   console.log(err);
