@@ -1,8 +1,8 @@
 {
-  "name": "nap-extractor",
+  "name": "address-extractor",
   "version": "1.0.0",
-  "description": "Rule based NAP extractor from a URL",
-  "main": "nap-extractor.js",
+  "description": "Rule based address extraction from a URL; based on https://web.cs.dal.ca/~zyu/research/Thesis.pdf",
+  "main": "address-extractor.js",
   "dependencies": {
     "jsdom": "^12.2.0"
   }
