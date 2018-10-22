@@ -1,11 +1,13 @@
-const { JSDOM } = require('jsdom');
+const fs = require('fs'),
+  { JSDOM } = require('jsdom');
 
 const STREET_NUM_RE = /(\d{1,6})|One|Two|Three/,
   STREET_CITY_RE = /.{2,60}/,
-  STATE_RE = /WA|Washington|Wash.?/, // TODO all states
+  STATE_LIST = fs.readFileSync('states.dat', {encoding: 'utf8'}),
+  STATE_RE = new RegExp(`(${STATE_LIST.split('\n').join('|')})`),
   ZIP_RE = /\d{5}(-\d{4})?/,
   ADDRESS_PATTERN = new RegExp(`(${STREET_NUM_RE.source}) ` +
-    `(${STREET_CITY_RE.source}), (${STATE_RE.source})( ${ZIP_RE.source})?`,
+    `(${STREET_CITY_RE.source}),? (${STATE_RE.source})( ${ZIP_RE.source})?`,
     'g');
 
 const URL = process.argv[2];
