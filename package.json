@@ -1,0 +1,9 @@
+{
+  "name": "nap-extractor",
+  "version": "1.0.0",
+  "description": "Rule based NAP extractor from a URL",
+  "main": "nap-extractor.js",
+  "dependencies": {
+    "jsdom": "^12.2.0"
+  }
+}
